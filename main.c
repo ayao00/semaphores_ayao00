@@ -29,6 +29,10 @@ int main(int argc, char *argv[]){
       printf("Semaphore Error: %s\n", strerror(errno));
       semaphore = semget(SEMKEY, 1, 0);
       int v = semctl(semaphore, 0, GETVAL, 0);
+    }else{
+      union semun data;
+      data.val = 1;
+      int r = semctl(semaphore, 0, SETVAL, data);
     }
     printf("semaphore created\n");
     int shmid = shmget(KEY,  sizeof(char *), 0644 | IPC_CREAT);
